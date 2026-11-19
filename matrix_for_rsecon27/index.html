@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Matrix for RSECon27</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <style>
+      .reveal h2 { font-size: 1.6em; }
+      .reveal h3 { font-size: 1.2em; margin-bottom: 0.4em; }
+      .reveal small, .reveal .caption { font-size: 0.6em; line-height: 1.4; display: block; margin-top: 0.5em; }
+      .reveal ul, .reveal ol { font-size: 0.75em; }
+      .reveal kbd { font-family: inherit; border: 1px solid #888; border-radius: 4px; padding: 0 0.3em; }
+
+      /* Screenshots: wide (browser/desktop) and portrait (phone). */
+      .reveal img.shot { margin: 0; border-radius: 6px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6); }
+      .reveal img.shot.wide { max-width: 1000px; max-height: 470px; }
+      .reveal img.shot.phone { max-height: 500px; }
+
+      /* Shown in place of a screenshot that has not been taken yet. */
+      .reveal .placeholder {
+        display: inline-flex; flex-direction: column; justify-content: center; align-items: center;
+        border: 3px dashed #e8a33d; border-radius: 12px; color: #e8a33d;
+        font-size: 0.55em; padding: 1em; box-sizing: border-box; gap: 0.5em;
+      }
+      .reveal .placeholder.wide { width: 860px; height: 450px; }
+      .reveal .placeholder.phone { width: 260px; height: 500px; }
+      .reveal .placeholder code { color: #fff; font-size: 1.1em; word-break: break-all; }
+
+      /* QR codes */
+      /* QR codes are drawn by lib/qrcode-generator from the link's href (see script at the bottom). */
+      .reveal a.qr { display: block; width: 260px; height: 260px; margin: 0 auto; background: #fff; padding: 6px; border-radius: 8px; }
+      .reveal a.qr.small { width: 190px; height: 190px; }
+      .reveal a.qr svg { display: block; width: 100%; height: 100%; }
+      .reveal .qr-url { display: block; font-family: monospace; font-size: 0.5em; color: #42affa; margin-top: 0.4em; }
+      .reveal .qr-row { display: flex; justify-content: center; gap: 2.5em; align-items: flex-start; }
+      .reveal .qr-row figure { margin: 0; text-align: center; }
+      .reveal .qr-row figcaption { font-size: 0.5em; margin-top: 0.4em; }
+
+      .reveal .two-col { display: flex; gap: 2em; align-items: center; justify-content: center; }
+      .reveal .two-col > div:not(.placeholder) { flex: 1; }
+      .reveal .path-choice { display: flex; gap: 2em; justify-content: center; }
+      .reveal .path-choice a {
+        display: block; width: 380px; padding: 1em; border: 2px solid #42affa; border-radius: 14px;
+        font-size: 0.8em; text-align: center;
+      }
+      .reveal .path-choice a span { display: block; font-size: 2.5em; }
+      .reveal .note { color: #e8a33d; }
+      .reveal .todo { background: #e8a33d; color: #000; padding: 0 0.3em; border-radius: 4px; }
+      .reveal .link { font-family: monospace; font-size: 0.7em; color: #42affa; }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- ===================== 0. Title ===================== -->
+        <section>
+          <section id="title">
+            <img src="media/matrix-logo-white.svg" width="460" alt="Matrix" />
+            <h2>@ RSECon27</h2>
+            <div class="qr-row">
+              <figure>
+                <a class="qr" data-show-url href="https://matrix.to/#/#rsecon27:epfl.ch" target="_blank" aria-label="QR code to the RSECon27 space"></a>
+                <figcaption>Join the space</figcaption>
+              </figure>
+            </div>
+            <small>Press <kbd>→</kbd> for the next section, <kbd>↓</kbd> for the next step, <kbd>Esc</kbd> for an overview</small>
+          </section>
+
+          <section>
+            <h3>Why Matrix?</h3>
+            <ul>
+              <li><b>Open &amp; decentralised</b> – like e-mail: an account on <i>any</i> server can talk to <i>any</i> other</li>
+              <li>You sign up on <b>matrix.org</b>, our space lives on <b>epfl.ch</b> – and that just works</li>
+              <li><b>End-to-end encrypted</b> direct messages and private rooms</li>
+              <li>Apps for <b>phone</b>, <b>web</b> and <b>desktop</b> – use them all at the same time</li>
+              <li>Stays with you after the conference: one account for the whole RSE community</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>In a nutshell</h3>
+            <ol>
+              <li>Create a <b>matrix.org</b> account – easiest with <b>GitHub</b></li>
+              <li>Install <b>Element X</b> on your phone (or use Element on the web)</li>
+              <li>Save your <b>recovery key</b></li>
+              <li>Scan the QR code and <b>join the RSECon27 space</b></li>
+            </ol>
+            <small>Each step is explained in detail on the following slides.</small>
+          </section>
+        </section>
+
+        <!-- ===================== 1. Pick your path ===================== -->
+        <section id="path">
+          <h3>Pick your path</h3>
+          <p style="font-size: 0.7em">Start on the device you have at hand. You can add the other one later (<a href="#/second-device">step 7</a>).</p>
+          <div class="path-choice">
+            <a href="#/account"><span>📱</span>Phone first<br /><small>Account → Element X → Join</small></a>
+            <a href="#/account"><span>💻</span>Computer first<br /><small>Account → Element Web → Join</small></a>
+          </div>
+          <small>Both paths start with creating your account.</small>
+        </section>
+
+        <!-- ===================== 2. Create your account ===================== -->
+        <section>
+          <section id="account">
+            <h3>2 · Create your matrix.org account</h3>
+            <div class="two-col">
+              <div style="text-align: left">
+                <ul>
+                  <li>Open <a class="link" href="https://account.matrix.org/register" target="_blank">account.matrix.org/register</a></li>
+                  <li><b>Recommended:</b> “Continue with GitHub” – no new password to remember</li>
+                  <li>No GitHub? Username + password + e-mail works too</li>
+                </ul>
+              </div>
+              <div>
+                <a class="qr small" href="https://account.matrix.org/register" target="_blank" aria-label="QR code to matrix.org registration"></a>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>Create your account</h3>
+            <img class="shot wide" src="screenshots/02-1-register-choices.png" alt="matrix.org sign-up page showing 'Continue with GitHub'" />
+            <span class="caption">Click <b>“Continue with GitHub”</b></span>
+          </section>
+
+          <section>
+            <h3>Create your account</h3>
+            <img class="shot wide" src="screenshots/02-2-github-authorize.png" alt="GitHub 'Authorize matrix.org' screen" />
+            <span class="caption">Log in to GitHub if needed, then <b>“Authorize”</b>.<br />matrix.org only gets your public profile.</span>
+          </section>
+
+          <section>
+            <h3>Create your account</h3>
+            <img class="shot wide" src="screenshots/02-3-choose-username.png" alt="Choose your Matrix username" />
+            <span class="caption">Choose your Matrix username → <b>@name:matrix.org</b><br />
+              <span class="note">⚠ It is permanent and can't be changed later.</span> It may be the same as your GitHub handle.</span>
+          </section>
+
+          <section>
+            <h3>Create your account</h3>
+            <img class="shot wide" src="screenshots/02-4-account-done.png" alt="matrix.org account created" />
+            <span class="caption">Done – you now have a Matrix account!</span>
+          </section>
+
+          <section>
+            <h3>Remember: you log in with GitHub</h3>
+            <ul>
+              <li>Your account has <b>no Matrix password</b><br />→ on every new device, choose <b>“Continue with GitHub”</b> again</li>
+              <li>GitHub is <b>not</b> your encryption key – you still need the <b>recovery key</b> (next step)</li>
+              <li>Add an <b>e-mail address</b> to your account (<a href="#/profile">step 5</a>) – your fallback if you ever lose GitHub access</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Alternative: without GitHub</h3>
+            <img class="shot wide" src="screenshots/02-5-register-password.png" alt="matrix.org sign-up with username, password and e-mail" />
+            <span class="caption">Choose username + password, confirm your e-mail and solve the captcha</span>
+          </section>
+        </section>
+
+        <!-- ===================== 3a. Mobile: Element X ===================== -->
+        <section>
+          <section id="mobile">
+            <h3>3a · 📱 Install Element X</h3>
+            <div class="qr-row">
+              <figure>
+                <a class="qr" href="https://apps.apple.com/app/element-x-secure-chat-call/id1631335820" target="_blank" aria-label="QR code to Element X on the App Store"></a>
+                <figcaption>iPhone / iPad<br />App Store</figcaption>
+              </figure>
+              <figure>
+                <a class="qr" href="https://play.google.com/store/apps/details?id=io.element.android.x" target="_blank" aria-label="QR code to Element X on Google Play"></a>
+                <figcaption>Android<br />Google Play (also on F-Droid)</figcaption>
+              </figure>
+            </div>
+            <small>Make sure it's <b>Element X</b>, not the older “Element” app.</small>
+          </section>
+
+          <section>
+            <h3>Element X</h3>
+            <div class="two-col">
+              <img class="shot phone" src="screenshots/03a-1-welcome.png" alt="Element X welcome screen" />
+              <img class="shot phone" src="screenshots/03a-2-server.png" alt="Element X server selection showing matrix.org" />
+            </div>
+            <span class="caption">Tap <b>“Sign in”</b> – keep <b>matrix.org</b> as server and <b>“Continue”</b></span>
+          </section>
+
+          <section>
+            <h3>Element X</h3>
+            <img class="shot phone" src="screenshots/03a-3-github-login.png" alt="matrix.org login in Element X with 'Continue with GitHub'" />
+            <span class="caption"><b>“Continue with GitHub”</b> – same as when you created the account</span>
+          </section>
+
+          <section>
+            <h3>Element X</h3>
+            <img class="shot phone" src="screenshots/03a-4-notifications.png" alt="Element X asks to allow notifications" />
+            <span class="caption">Allow notifications – otherwise you'll miss messages during the conference</span>
+          </section>
+
+          <section>
+            <h3>Element X · Recovery key</h3>
+            <div class="two-col">
+              <img class="shot phone" src="screenshots/03a-5-recovery-setup.png" alt="Element X 'Set up recovery' prompt" />
+              <img class="shot phone" src="screenshots/03a-6-recovery-key.png" alt="Element X shows the recovery key" />
+            </div>
+            <span class="caption"><b>“Set up recovery”</b> → save the key in your password manager.<br />
+              <span class="note">⚠ Without it, you can't read your encrypted messages on a new device.</span></span>
+          </section>
+
+          <section>
+            <h3>Element X</h3>
+            <img class="shot phone" src="screenshots/03a-7-home.png" alt="Element X empty chat list" />
+            <span class="caption">You're in! Now <a href="#/join">join the RSECon27 space →</a></span>
+          </section>
+        </section>
+
+        <!-- ===================== 3b. Web / Desktop ===================== -->
+        <section>
+          <section id="web">
+            <h3>3b · 💻 Element on the web</h3>
+            <div class="two-col">
+              <div style="text-align: left">
+                <ul>
+                  <li>Open <a class="link" href="https://app.element.io" target="_blank">app.element.io</a></li>
+                  <li>Or install the desktop app from <a class="link" href="https://element.io/download" target="_blank">element.io/download</a></li>
+                  <li>Both work the same way</li>
+                </ul>
+              </div>
+              <div>
+                <a class="qr small" href="https://app.element.io/" target="_blank" aria-label="QR code to app.element.io"></a>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>Element Web</h3>
+            <img class="shot wide" src="screenshots/03b-1-welcome.png" alt="Element Web welcome page" />
+            <span class="caption">Click <b>“Sign in”</b> – the server is already <b>matrix.org</b></span>
+          </section>
+
+          <section>
+            <h3>Element Web</h3>
+            <img class="shot wide" src="screenshots/03b-2-github-login.png" alt="matrix.org login page with 'Continue with GitHub'" />
+            <span class="caption"><b>“Continue with GitHub”</b> and confirm</span>
+          </section>
+
+          <section>
+            <h3>Element Web</h3>
+            <img class="shot wide" src="screenshots/03b-3-notifications.png" alt="Element Web notifications banner" />
+            <span class="caption">Enable desktop notifications</span>
+          </section>
+
+          <section>
+            <h3>Element Web · Recovery key</h3>
+            <img class="shot wide" src="screenshots/03b-4-recovery-setup.png" alt="Element Web 'Set up recovery' prompt" />
+            <span class="caption">Click <b>“Set up recovery”</b> when prompted</span>
+          </section>
+
+          <section>
+            <h3>Element Web · Recovery key</h3>
+            <img class="shot wide" src="screenshots/03b-5-recovery-key.png" alt="Element Web shows the recovery key" />
+            <span class="caption">Copy or download the key and store it in your password manager.<br />
+              <span class="note">⚠ Without it, you can't read your encrypted messages on a new device.</span></span>
+          </section>
+
+          <section>
+            <h3>Element Web</h3>
+            <img class="shot wide" src="screenshots/03b-6-home.png" alt="Element Web home after login" />
+            <span class="caption">You're in! Now join the RSECon27 space ↓→</span>
+          </section>
+        </section>
+
+        <!-- ===================== 4. Join the space ===================== -->
+        <section>
+          <section id="join">
+            <h3>4 · Join the RSECon27 space</h3>
+            <div class="qr-row">
+              <figure>
+                <a class="qr" data-show-url href="https://matrix.to/#/#rsecon27:epfl.ch" target="_blank" aria-label="QR code to the RSECon27 space"></a>
+              </figure>
+            </div>
+            <small>Scan with your phone, or open the link on your computer.<br />
+              A <b>space</b> groups all the conference rooms together.</small>
+          </section>
+
+          <section>
+            <h3>📱 Join on your phone</h3>
+            <div class="two-col">
+              <img class="shot phone" src="screenshots/04-1-matrixto-mobile.png" alt="matrix.to page on a phone, choosing Element X" />
+              <img class="shot phone" src="screenshots/04-2-space-join-mobile.png" alt="Element X space preview with 'Join' button" />
+            </div>
+            <span class="caption">Choose <b>Element X</b> → <b>“Join”</b></span>
+          </section>
+
+          <section>
+            <h3>📱 Join on your phone</h3>
+            <img class="shot phone" src="screenshots/04-3-space-rooms-mobile.png" alt="Element X list of rooms in the RSECon27 space" />
+            <span class="caption">Open the space and join the rooms you're interested in</span>
+          </section>
+
+          <section>
+            <h3>💻 Join on your computer</h3>
+            <img class="shot wide" src="screenshots/04-4-matrixto-desktop.png" alt="matrix.to page in a desktop browser" />
+            <span class="caption">Choose <b>Element</b> → <b>“Continue”</b> (web or desktop app)</span>
+          </section>
+
+          <section>
+            <h3>💻 Join on your computer</h3>
+            <img class="shot wide" src="screenshots/04-5-space-desktop.png" alt="Element Web space home with list of rooms" />
+            <span class="caption"><b>“Join”</b> the space, then <b>“Join”</b> the rooms you're interested in.<br />
+              The space icon appears in the left sidebar.</span>
+          </section>
+        </section>
+
+        <!-- ===================== 5. Profile ===================== -->
+        <section>
+          <section id="profile">
+            <h3>5 · Set up your profile</h3>
+            <ul>
+              <li><b>Display name</b> – your real name, so people recognise you</li>
+              <li><b>Avatar</b> – a photo helps finding each other at the conference</li>
+              <li><b>E-mail address</b> – fallback login and notifications</li>
+            </ul>
+            <small>Your <b>username</b> (@name:matrix.org) stays the same – only the display name changes.</small>
+          </section>
+
+          <section>
+            <h3>📱 Profile on your phone</h3>
+            <img class="shot phone" src="screenshots/05-1-profile-mobile.png" alt="Element X profile settings" />
+            <span class="caption">Tap your avatar (top left) → tap it again to edit name and photo</span>
+          </section>
+
+          <section>
+            <h3>💻 Profile on your computer</h3>
+            <img class="shot wide" src="screenshots/05-2-profile-desktop.png" alt="Element Web settings, profile section" />
+            <span class="caption">Your avatar (top left) → <b>“All settings”</b> → <b>Account</b>: display name and photo → <b>“Save”</b></span>
+          </section>
+
+          <section>
+            <h3>Add an e-mail address</h3>
+            <img class="shot wide" src="screenshots/05-3-add-email.png" alt="matrix.org account page, adding an e-mail address" />
+            <span class="caption">Especially important if you signed up with GitHub</span>
+          </section>
+        </section>
+
+        <!-- ===================== 6. Basics ===================== -->
+        <section>
+          <section id="basics">
+            <h3>6 · Chatting basics</h3>
+            <ul>
+              <li><b>Post</b> in a room</li>
+              <li><b>Reply in a thread</b> – keeps busy rooms readable</li>
+              <li><b>React</b> with an emoji</li>
+              <li><b>Mention</b> someone with <code>@</code></li>
+              <li>Send a <b>direct message</b></li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Post a message</h3>
+            <img class="shot wide" src="screenshots/06-1-message.png" alt="Writing a message in a room" />
+            <span class="caption">Type and press <kbd>Enter</kbd> – say hello in the welcome room 👋</span>
+          </section>
+
+          <section>
+            <h3>Reply in a thread</h3>
+            <div class="two-col">
+              <img class="shot wide" src="screenshots/06-2-thread.png" style="max-width: 640px" alt="Element Web: thread reply" />
+              <img class="shot phone" src="screenshots/06-3-thread-mobile.png" alt="Element X: reply to a message" />
+            </div>
+            <span class="caption">Hover a message → <b>“Reply in thread”</b> (computer) · long-press a message (phone)</span>
+          </section>
+
+          <section>
+            <h3>React &amp; mention</h3>
+            <img class="shot wide" src="screenshots/06-4-react-mention.png" alt="Emoji reaction and @mention" />
+            <span class="caption">Hover / long-press a message to react · type <code>@</code> and a name to mention</span>
+          </section>
+
+          <section>
+            <h3>Direct message</h3>
+            <img class="shot wide" src="screenshots/06-5-dm.png" alt="Starting a direct message from a user's profile" />
+            <span class="caption">Click on someone's name → <b>“Send message”</b></span>
+          </section>
+        </section>
+
+        <!-- ===================== 7. Second device ===================== -->
+        <section>
+          <section id="second-device">
+            <h3>7 · Add your second device</h3>
+            <ul>
+              <li>Sign in on the other device, with <b>“Continue with GitHub”</b> again</li>
+              <li>Then <b>verify</b> the new device:
+                <ul>
+                  <li>scan a QR code with the device you already use, <b>or</b></li>
+                  <li>enter your <b>recovery key</b></li>
+                </ul>
+              </li>
+              <li>Without verification: <i>“Unable to decrypt message”</i></li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Verify the new device</h3>
+            <img class="shot wide" src="screenshots/07-1-confirm-identity.png" alt="New device asks to confirm your identity" />
+            <span class="caption">The new device asks to <b>confirm your identity</b></span>
+          </section>
+
+          <section>
+            <h3>Option 1: with your other device</h3>
+            <div class="two-col">
+              <img class="shot wide" src="screenshots/07-2-qr-shown.png" style="max-width: 600px" alt="Computer shows a verification QR code" />
+              <img class="shot phone" src="screenshots/07-3-qr-scan.png" alt="Phone scans the verification QR code" />
+            </div>
+            <span class="caption">Scan the QR code with the device you already use and confirm</span>
+          </section>
+
+          <section>
+            <h3>Option 2: with your recovery key</h3>
+            <img class="shot wide" src="screenshots/07-4-recovery-key-entry.png" alt="Entering the recovery key" />
+            <span class="caption">Paste the recovery key you saved in step 3</span>
+          </section>
+
+          <section>
+            <h3>Verified!</h3>
+            <img class="shot wide" src="screenshots/07-5-verified.png" alt="Device successfully verified" />
+            <span class="caption">Your messages appear on both devices 🎉</span>
+          </section>
+        </section>
+
+        <!-- ===================== 8. Troubleshooting & etiquette ===================== -->
+        <section>
+          <section id="help">
+            <h3>8 · Troubleshooting</h3>
+            <ul>
+              <li><b>“Unable to decrypt”</b> → verify this device (<a href="#/second-device">step 7</a>)</li>
+              <li><b>No notifications</b> → check OS settings for Element X / your browser</li>
+              <li><b>Can't log in</b> → did you use <b>“Continue with GitHub”</b>? There is no password</li>
+              <li><b>Lost the recovery key</b> while logged in → create a new one in settings (Encryption).<br />
+                Lost it and all devices → old encrypted messages are gone, the account is fine</li>
+              <li><b>Can't find the space</b> → open the QR code / link again</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Etiquette at RSECon27</h3>
+            <ul>
+              <li>Use <b>threads</b> for discussions</li>
+              <li>Stay on topic – pick the right room for your question</li>
+              <li>The conference <b>code of conduct</b> applies here too <span class="todo">TODO: link</span></li>
+              <li>Questions or problems? <span class="todo">TODO: contact / help room</span></li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- ===================== 9. Further ===================== -->
+        <section id="further">
+          <h3>9 · Going further</h3>
+          <ul>
+            <li>Other apps: <b>FluffyChat</b>, <b>Cinny</b>, <b>Nheko</b>, … – <a class="link" href="https://matrix.org/ecosystem/clients" target="_blank">matrix.org/ecosystem/clients</a></li>
+            <li><b>Bridges</b> to Slack, Signal, IRC, … – <a class="link" href="https://matrix.org/ecosystem/bridges" target="_blank">matrix.org/ecosystem/bridges</a></li>
+            <li>Run your own server – <a class="link" href="https://matrix.org/ecosystem/servers" target="_blank">matrix.org/ecosystem/servers</a></li>
+            <li>The Matrix specification is open: <a class="link" href="https://spec.matrix.org" target="_blank">spec.matrix.org</a></li>
+          </ul>
+          <small>Adapted from the EPFL Matrix guide by Edward Andò &amp; Carine Dengler <i>et al.</i></small>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="dist/plugin/notes.js"></script>
+    <script src="lib/qrcode-generator/qrcode.js"></script>
+    <script>
+      // Draw every QR code from its link's href, so the encoded URL is the one in this file.
+      document.querySelectorAll('a.qr').forEach((a) => {
+        const url = a.getAttribute('href');
+        const qr = qrcode(0, 'M'); // 0 = pick the smallest QR version that fits
+        qr.addData(url);
+        qr.make();
+        a.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+        if (a.hasAttribute('data-show-url')) {
+          const label = document.createElement('a');
+          label.className = 'qr-url';
+          label.href = url;
+          label.target = '_blank';
+          label.textContent = url.replace(/^https:\/\//, '');
+          a.insertAdjacentElement('afterend', label);
+        }
+      });
+
+      // Show a labelled placeholder for every screenshot that does not exist yet.
+      document.querySelectorAll('img.shot').forEach((img) => {
+        const swap = () => {
+          const box = document.createElement('div');
+          box.className = 'placeholder ' + (img.classList.contains('phone') ? 'phone' : 'wide');
+          box.innerHTML = '<b>Screenshot missing</b><code></code><span></span>';
+          box.querySelector('code').textContent = img.getAttribute('src');
+          box.querySelector('span').textContent = img.alt;
+          img.replaceWith(box);
+        };
+        if (img.complete && img.naturalWidth === 0) swap();
+        else img.addEventListener('error', swap);
+      });
+
+      Reveal.initialize({
+        hash: true,
+        transition: 'fade',
+        width: 1280,
+        height: 760,
+        plugins: [RevealNotes],
+      });
+    </script>
+  </body>
+</html>
