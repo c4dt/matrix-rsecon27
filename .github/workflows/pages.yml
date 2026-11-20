@@ -23,13 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: touch matrix_for_rsecon27/.nojekyll
+      - run: touch .nojekyll
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: matrix_for_rsecon27
+          path: .
 
       - id: deployment
         uses: actions/deploy-pages@v4

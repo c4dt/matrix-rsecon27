@@ -5,8 +5,7 @@
   ],
   "shell": {
     "scripts": {
-      "serve": "echo 'Serving on http://localhost:${PORT:-8000}' && python3 -m http.server ${PORT:-8000} --bind 127.0.0.1 --directory matrix_for_users",
-      "serve27": "echo 'Serving on http://localhost:${PORT:-8001}' && python3 -m http.server ${PORT:-8001} --bind 127.0.0.1 --directory matrix_for_rsecon27"
+      "serve": "echo \"Serving on http://localhost:${PORT:-8000}\" && python3 -m http.server ${PORT:-8000} --bind 127.0.0.1 --directory ."
     }
   }
 }
